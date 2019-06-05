@@ -1,5 +1,5 @@
 #### Arquivo de entrada
-* Arquivo de entrada deve estar formatado conforme [arquivo exemplo](https://www.dropbox.com/s/8hu3h025064cmg4/dados_exemplo.csv?dl=0)
+* Arquivo de entrada deve estar formatado conforme [arquivo exemplo](https://raw.githubusercontent.com/higuchip/FitoCom/master/dados_exemplo.csv)
 , que deve ter necessariamente as colunas **parc** (parcelas), **spp** (espécies), **dap** ou **cap** (circunferência ou diâmetro na altura do peito em cm).
 
 #### Descritores fitossociológicos:
