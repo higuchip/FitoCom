@@ -21,7 +21,7 @@ Autor: Pedro Higuchi - higuchip at gmail.com
 
 #### Pacotes e funcões utilizados:
 
-*  Chang, W.; Cheng, J.; Allaire, JJ; Xie, Y.;  McPherson, J.  (2017). shiny: Web Application Framework for R. R package version
+*  Chang, W.; Cheng, J.; Allaire, JJ; Xie, Y.;  McPherson, J.  2017. shiny: Web Application Framework for R. R package version
   1.0.4. https://CRAN.R-project.org/package=shiny
 * Dalagnol, Ricardo; Christo, Alexandre Gabriel; Higuchi, Pedro; Rodrigues, Arthur Vinicius. 
 Função para cálculo dos descritores fitossociológicos e similaridade entre sítios. Disponível em: https://github.com/ricds/fitoR.
