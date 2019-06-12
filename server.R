@@ -4,6 +4,8 @@ function(input, output, session) {
   
 
   ##RESUMO
+  
+
   output$resumo1 <- renderText(
     {
       inFile <- input$arquivo
@@ -401,8 +403,11 @@ function(input, output, session) {
       SW=-sum(Pi)
       S=nrow(fito)
       J=SW/log(S)
+      Hill= exp(SW)
       paste("Índice de Shannon-Wiener (H') = ",round(SW, 2))
     })
+  
+  
   
   output$resumo5 <- renderText(
     {
@@ -505,8 +510,112 @@ function(input, output, session) {
       S=nrow(fito)
       J=SW/log(S)
       paste("Equabilidade de Pielou (J) = ",round(J,2))
+
     })
-  
+  output$resumo6 <- renderText(
+    {
+      inFile <- input$arquivo
+      
+      if (is.null(inFile))
+        return(NULL)
+      
+      veg<-read.table(inFile$datapath, header = T,
+                      sep = ";", dec=",")
+      matriz<-as.data.frame.matrix(table(veg$spp, veg$parc))
+      area<-as.numeric(input$area)
+      
+      
+      #numero de parcelas
+      nparc<-length(levels(as.factor(veg$parc)))
+      
+      #area total amostrada
+      area.parc=(area*nparc)
+      
+      #densidade
+      dta=length(veg$spp)/(area.parc/10000)
+      
+      #desvio da densidade entre parcelas
+      dtadesv = 0
+      dtai = 1
+      vetor=1
+      while(dtai <= nparc)
+      {
+        length(vetor) <- nparc
+        vetor[dtai] = sum(matriz[,dtai])
+        dtadesv = sd(vetor)/(area/10000)
+        dtai = dtai + 1
+      }
+      
+      #calcula o numero de ind amostrados
+      N<-apply(matriz,1,sum)
+      
+      #calcula densidades
+      DA<-apply(matriz,1,sum)/(area.parc/10000)
+      DR<-DA/sum(DA)*100
+      
+      #calcula frequencias
+      freq<-(if (length(dim(matriz)) > 1)
+      {apply(matriz > 0,1,sum)} else sum(matriz > 0))
+      FA<-(freq/nparc)*100
+      FR<-(FA/sum(FA))*100
+      
+      #checa por NAs nos dados e transforma em zeros
+      veg[is.na(veg)] <- 0
+      
+      #determina se existe "caps" ou "daps" e quais colunas est
+      cols = grep('cap', colnames(veg))
+      ncols = length(cols)
+      if (ncols>0) param="cap"
+      
+      cols2 = grep('dap', colnames(veg))
+      ncols2 = length(cols2)
+      if (ncols2>0) param="dap"
+      
+      if (param=="dap") cols=cols2
+      if (param=="dap") ncols=ncols2
+      
+      i=1
+      veg$areasec=0
+      while (i<=ncols)
+      {
+        if (param=="cap") veg$areasec<-veg$areasec+((pi*(veg[,cols[i]]/pi)^2)/40000)
+        if (param=="dap") veg$areasec<-veg$areasec+((pi*veg[,cols[i]]^2)/40000)
+        i=i+1
+      }
+      
+      #calcula as dominancias
+      DoA<-tapply(veg$areasec, veg$spp, sum)/(area.parc/10000)
+      DoR<-DoA/sum(DoA) *100
+      
+      # area basal por espécie
+      AB<-tapply(veg$areasec, veg$spp, sum)
+      
+      #area basal
+      abta=sum(DoA)
+      
+      #desvio da area basal entre parcelas
+      somag<-tapply(veg$areasec, veg$parc, sum)/(area/10000)
+      abdesv = sd(somag)
+      
+      #calcula o indice de valor de importancia
+      VI<-(DR+DoR+FR)/3
+      
+      #monta a tabela
+      fito=data.frame(N=N,AB=AB,DA=DA,DR=DR,DoA=DoA,DoR=DoR,FA=FA,FR=FR,VI=VI)
+      
+      #fito
+      
+      
+      #calcula os indices de diversidade
+      Pi<-N/sum(N)
+      Pi<-Pi*log(Pi)
+      SW=-sum(Pi)
+      Hill=exp(SW)
+      S=nrow(fito)
+      J=SW/log(S)
+      paste("Numero de Hill = ",round(Hill,2))
+      
+    })
   
   ###TABELA FITOSSOCIOLOGICA
   
@@ -628,6 +737,10 @@ function(input, output, session) {
     }
   )
   
+  
+  ###ANALISE AMOSTRAGEM
+  
+  
   ###TABELA DE INTERPOLACAO E EXTRAPOLACAO
   
   datasetInput_inter_extra = function() {
@@ -729,10 +842,10 @@ function(input, output, session) {
                      sep = ";", dec=",")
      vars <- names(veg)
      # Update select input immediately after clicking on the action button.
-     updateSelectInput(session, "columns1","Selecione as Parcelas", choices = vars)
+    updateSelectInput(session, "columns1","Selecione as Parcelas", choices = vars)
      updateSelectInput(session, "columns","Selecione os Setores", choices = vars)
-
-
+     
+     
      veg
      
    })
@@ -748,7 +861,7 @@ function(input, output, session) {
      veg <- read.table(inFile$datapath, header = T,
                        sep = ";", dec=",")
     sub_veg <- subset(indicadoras, select = c(input$columns1,input$columns)) #subsetting takes place here
-    matriz_ind<-table(sub_veg$parc, sub_veg$exp)
+    matriz_ind<-table(sub_veg[,1], sub_veg[,2])
     matriz_ind<-as.data.frame(as.table(matriz_ind))
     matriz_ind<-matriz_ind[matriz_ind$Freq>0,]
     setores<-matriz_ind$Var2

@@ -5,7 +5,7 @@ library(iNEXT)
 library(shinythemes)
 library(ggplot2)
 
-navbarPage(h4("FitoCom 1.5"),
+navbarPage(h4("FitoCom 1.1"),
            theme = shinytheme("flatly"),
            navbarMenu(h4("Menu"),
                       fluidRow(
@@ -22,18 +22,12 @@ navbarPage(h4("FitoCom 1.5"),
                                
                                sidebarLayout(
                                  sidebarPanel(helpText(h3("Descritores Fitossociológicos")),
-                                   fileInput("arquivo", "Escolha arquivo CSV",
-                                             accept = c(
-                                               "text/csv",
-                                               "text/comma-separated-values,text/plain",
-                                               ".csv")),
-                                   numericInput("area", "Área da parcela (m2)", 200),
-                                   
-                                   selectInput("curvaInput", "Sistema de Amostragem",
-                                               choices = c("Aleatória Simples" =1, 
-                                                           "Sistemática" =2,
-                                                           "Estratificada"=3)),
-                                   numericInput("area_fragmento", "Área da floresta (ha)", 200)
+                                              fileInput("arquivo", "Escolha arquivo CSV",
+                                                        accept = c(
+                                                          "text/csv",
+                                                          "text/comma-separated-values,text/plain",
+                                                          ".csv")),
+                                              numericInput("area", "Área da parcela", 200)
                                  ),
                                  mainPanel(
                                    tabsetPanel(
@@ -49,18 +43,18 @@ navbarPage(h4("FitoCom 1.5"),
                                               ("Estimativas de Densidade Absoluta (DA ind/ha) e Relativa (DR %), Dominância Absoluta (DoA m2/ha) e Relativa (DoR %) e
                                                Frequência Absoluta (FA %) e Relativa (FR %) e Valor de Importância (VI %)"),
                                               tableOutput("fito") )
-                                     ))
-                                 )
+                                   ))
+                               )
                                
-                                 ),
+                      ),
                       
                       tabPanel(h4("Diversidade"),
                                sidebarLayout(
                                  sidebarPanel(helpText(h3("Diversidade")),
-                                   selectInput("curvaInput", "Tipo de Curva",
-                                               choices = c("rarefaction/extrapolation" =1, 
-                                                           "sample completeness curve" =2,
-                                                           "coverage-based rarefaction/extrapolation curve"=3))
+                                              selectInput("curvaInput", "Tipo de Curva",
+                                                          choices = c("rarefaction/extrapolation" =1, 
+                                                                      "sample completeness curve" =2,
+                                                                      "coverage-based rarefaction/extrapolation curve"=3))
                                  ),
                                  mainPanel(
                                    tabsetPanel(
@@ -74,21 +68,21 @@ navbarPage(h4("FitoCom 1.5"),
                                               tableOutput("inter_extra") ),
                                      tabPanel("Curva", downloadButton('downloadPlot', 'Exportar como jpg'), plotOutput("myplot"))
                                    ))
-                                 )
+                               )
                                
-                               ),
+                      ),
                       tabPanel(h4("Espécies Indicadoras"),
                                sidebarLayout(
                                  sidebarPanel(helpText(h3("Espécies Indicadoras")),
                                               helpText("1) inserir", tags$b("Arquivo"),
-                                              "no menu", tags$b("Descritores Fitossociológicos")),
+                                                       "no menu", tags$b("Descritores Fitossociológicos")),
                                               helpText("2) Definir colunas que representam as parcelas
                                               e os setores para quais serão definidas as espécies
                                               indicadoras"),
-                                    # textInput("text", "Nome do setor:")
-                                   selectInput("columns1", "Selecione as Parcelas", choices = NULL),
-                                   selectInput("columns", "Selecione os Setores", choices = NULL)
-
+                                              # textInput("text", "Nome do setor:")
+                                              selectInput("columns1", "Selecione as Parcelas", choices = NULL),
+                                              selectInput("columns", "Selecione os Setores", choices = NULL)
+                                              
                                  ),
                                  mainPanel(downloadButton('download_ind', 'Exportar como csv'),
                                            br(),
@@ -97,21 +91,21 @@ navbarPage(h4("FitoCom 1.5"),
                                            tableOutput("indicadoras")
                                  )
                                )
-                               )
+                      )
                       
            ),
            
            navbarMenu(h4("Sobre"),
-                  
+                      
                       tabPanel(h4("Instruções de uso"),
-
-                                        fluidRow(
-                                          column(8,
-                                                 includeMarkdown("instrucoes.md")
-                                          )
-                                        
-                                        )
-                               ),
+                               
+                               fluidRow(
+                                 column(8,
+                                        includeMarkdown("instrucoes.md")
+                                 )
+                                 
+                               )
+                      ),
                       
                       tabPanel(h4("Referências"),
                                
@@ -136,7 +130,7 @@ navbarPage(h4("FitoCom 1.5"),
                                )
                       )
                       
-                      )
+           )
            
-        
+           
 )
