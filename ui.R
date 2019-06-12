@@ -5,7 +5,7 @@ library(iNEXT)
 library(shinythemes)
 library(ggplot2)
 
-navbarPage(h4("FitoCom 1.1"),
+navbarPage(h4("FitoCom 1.5"),
            theme = shinytheme("flatly"),
            navbarMenu(h4("Menu"),
                       fluidRow(
@@ -27,7 +27,13 @@ navbarPage(h4("FitoCom 1.1"),
                                                "text/csv",
                                                "text/comma-separated-values,text/plain",
                                                ".csv")),
-                                   numericInput("area", "Área da parcela", 200)
+                                   numericInput("area", "Área da parcela (m2)", 200),
+                                   
+                                   selectInput("curvaInput", "Sistema de Amostragem",
+                                               choices = c("Aleatória Simples" =1, 
+                                                           "Sistemática" =2,
+                                                           "Estratificada"=3)),
+                                   numericInput("area_fragmento", "Área da floresta (ha)", 200)
                                  ),
                                  mainPanel(
                                    tabsetPanel(
