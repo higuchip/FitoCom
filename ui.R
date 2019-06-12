@@ -5,7 +5,7 @@ library(iNEXT)
 library(shinythemes)
 library(ggplot2)
 
-navbarPage(h4("FitoCom 1.1"),
+navbarPage(h4("FitoCom 1.2"),
            theme = shinytheme("flatly"),
            navbarMenu(h4("Menu"),
                       fluidRow(
