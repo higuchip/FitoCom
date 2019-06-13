@@ -5,7 +5,7 @@ library(iNEXT)
 library(shinythemes)
 library(ggplot2)
 
-navbarPage(h4("FitoCom 1.1"),
+navbarPage(h4("FitoCom 1.5"),
            theme = shinytheme("flatly"),
            navbarMenu(h4("Menu"),
                       fluidRow(
@@ -22,31 +22,64 @@ navbarPage(h4("FitoCom 1.1"),
                                
                                sidebarLayout(
                                  sidebarPanel(helpText(h3("Descritores Fitossociológicos")),
-                                   fileInput("arquivo", "Escolha arquivo CSV",
-                                             accept = c(
-                                               "text/csv",
-                                               "text/comma-separated-values,text/plain",
-                                               ".csv")),
-                                   numericInput("area", "Área da parcela", 200)
+                                              
+                                 ## conditionalPanel() functions for selected tab
+                                 conditionalPanel(condition="input.tabselected==1",
+                                                  fileInput("arquivo", "Escolha arquivo CSV",
+                                                            accept = c(
+                                                              "text/csv",
+                                                              "text/comma-separated-values,text/plain",
+                                                              ".csv")),
+                                                  numericInput("area", "Área da parcela (m2)", 200)
+                                                  
                                  ),
-                                 mainPanel(
-                                   tabsetPanel(
-                                     tabPanel("Resumo",
-                                              textOutput("resumo1"),
-                                              textOutput("resumo2"),
-                                              textOutput("resumo3"),
-                                              textOutput("resumo4"),
-                                              textOutput("resumo5")),
-                                     tabPanel("Tabela Fitossociológica", 
-                                              downloadButton('downloadTab1', 'Exportar como csv'),
-                                              br(),
-                                              ("Estimativas de Densidade Absoluta (DA ind/ha) e Relativa (DR %), Dominância Absoluta (DoA m2/ha) e Relativa (DoR %) e
-                                               Frequência Absoluta (FA %) e Relativa (FR %) e Valor de Importância (VI %)"),
-                                              tableOutput("fito") )
-                                     ))
+                                 conditionalPanel(condition="input.tabselected==2",
+                                                  fileInput("arquivo", "Escolha arquivo CSV",
+                                                            accept = c(
+                                                              "text/csv",
+                                                              "text/comma-separated-values,text/plain",
+                                                              ".csv")),
+                                                  numericInput("area", "Área da parcela (m2)", 200)
+                                                  
+                                 ),
+                                 conditionalPanel(condition="input.tabselected==3",
+                                                  selectInput("samp.sis", "Sistema de Amostragem:",
+                                                              c("Aleatória Simples" = "AS",
+                                                                "Estratificada" = "EST",
+                                                                "Sistemática" = "SIS")),
+                                                  numericInput("area_floresta", "Área Total da Floresta (ha)", 150),
+                                                 
+                                                  numericInput("alfa", "Nível de significância", 0.05),
+                                                  numericInput("LE", "Limite de Erro Adimissível (%)", 10),
+                                                  textInput('area_estratos', 'No caso de Estratificada, entre com as áreas dos estratos em ha (delimitado com vírgula), 
+                                                            conforme sequencia dos mesmos no arquivo de entrada')
+                                                  
                                  )
-                               
                                  ),
+                                 
+                                 mainPanel(
+                                   # recommend review the syntax for tabsetPanel() & tabPanel() for better understanding
+                                   # id argument is important in the tabsetPanel()
+                                   # value argument is important in the tabPanle()
+                                   tabsetPanel(
+                                  tabPanel("Resumo", value=1, textOutput("resumo1"),
+                                           textOutput("resumo2"),
+                                           textOutput("resumo3"),
+                                           textOutput("resumo4"),
+                                           textOutput("resumo5"),
+                                          textOutput("resumo6")),
+                                  
+                                  tabPanel("Tabela Fitossociológica", value=2, downloadButton('downloadTab1', 'Exportar como csv'),
+                                           br(),
+                                           ("Estimativas de Densidade Absoluta (DA ind/ha) e Relativa (DR %), Dominância Absoluta (DoA m2/ha) e Relativa (DoR %) e
+                                               Frequência Absoluta (FA %) e Relativa (FR %) e Valor de Importância (VI %)"),
+                                           tableOutput("fito") ),
+                                  tabPanel("Esforço Amostral", value=3, textOutput("esforco",container = pre)),
+                                 
+                                     id = "tabselected"
+                                   )
+                                 )
+                                 )),
                       
                       tabPanel(h4("Diversidade"),
                                sidebarLayout(
