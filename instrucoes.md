@@ -21,8 +21,7 @@
 * Dalagnol, Ricardo; Christo, Alexandre Gabriel; Higuchi, Pedro; Rodrigues, Arthur Vinicius. 
 Função para cálculo dos descritores fitossociológicos e similaridade entre sítios. Disponível em: https://github.com/ricds/fitoR.
 
-* Higuchi, P. sampling.analysis: Função em linguagem de programação estatística R para análise do processo amostragem de 
-# levantamentos fitossociógicos em função do número de indivíduos e da área basal. 2019. #Disponvel em https://github.com/higuchip/sampling.analysis
+* Higuchi, P. sampling.analysis: Função em linguagem de programação estatística R para análise do processo amostragem de levantamentos fitossociógicos em função do número de indivíduos e da área basal. 2019. #Disponvel em https://github.com/higuchip/sampling.analysis
 
 * Hsieh, T.C.;  Ma, K. H.; Chao. A. 2018 iNEXT: iNterpolation and EXTrapolation for
 species diversity. R package version 2.0.17 URL:
