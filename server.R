@@ -507,6 +507,109 @@ function(input, output, session) {
       paste("Equabilidade de Pielou (J) = ",round(J,2))
     })
   
+  output$resumo6 <- renderText(
+    {
+      inFile <- input$arquivo
+      
+      if (is.null(inFile))
+        return(NULL)
+      
+      veg<-read.table(inFile$datapath, header = T,
+                      sep = ";", dec=",")
+      matriz<-as.data.frame.matrix(table(veg$spp, veg$parc))
+      area<-as.numeric(input$area)
+      
+      
+      #numero de parcelas
+      nparc<-length(levels(as.factor(veg$parc)))
+      
+      #area total amostrada
+      area.parc=(area*nparc)
+      
+      #densidade
+      dta=length(veg$spp)/(area.parc/10000)
+      
+      #desvio da densidade entre parcelas
+      dtadesv = 0
+      dtai = 1
+      vetor=1
+      while(dtai <= nparc)
+      {
+        length(vetor) <- nparc
+        vetor[dtai] = sum(matriz[,dtai])
+        dtadesv = sd(vetor)/(area/10000)
+        dtai = dtai + 1
+      }
+      
+      #calcula o numero de ind amostrados
+      N<-apply(matriz,1,sum)
+      
+      #calcula densidades
+      DA<-apply(matriz,1,sum)/(area.parc/10000)
+      DR<-DA/sum(DA)*100
+      
+      #calcula frequencias
+      freq<-(if (length(dim(matriz)) > 1)
+      {apply(matriz > 0,1,sum)} else sum(matriz > 0))
+      FA<-(freq/nparc)*100
+      FR<-(FA/sum(FA))*100
+      
+      #checa por NAs nos dados e transforma em zeros
+      veg[is.na(veg)] <- 0
+      
+      #determina se existe "caps" ou "daps" e quais colunas est
+      cols = grep('cap', colnames(veg))
+      ncols = length(cols)
+      if (ncols>0) param="cap"
+      
+      cols2 = grep('dap', colnames(veg))
+      ncols2 = length(cols2)
+      if (ncols2>0) param="dap"
+      
+      if (param=="dap") cols=cols2
+      if (param=="dap") ncols=ncols2
+      
+      i=1
+      veg$areasec=0
+      while (i<=ncols)
+      {
+        if (param=="cap") veg$areasec<-veg$areasec+((pi*(veg[,cols[i]]/pi)^2)/40000)
+        if (param=="dap") veg$areasec<-veg$areasec+((pi*veg[,cols[i]]^2)/40000)
+        i=i+1
+      }
+      
+      #calcula as dominancias
+      DoA<-tapply(veg$areasec, veg$spp, sum)/(area.parc/10000)
+      DoR<-DoA/sum(DoA) *100
+      
+      # area basal por espécie
+      AB<-tapply(veg$areasec, veg$spp, sum)
+      
+      #area basal
+      abta=sum(DoA)
+      
+      #desvio da area basal entre parcelas
+      somag<-tapply(veg$areasec, veg$parc, sum)/(area/10000)
+      abdesv = sd(somag)
+      
+      #calcula o indice de valor de importancia
+      VI<-(DR+DoR+FR)/3
+      
+      #monta a tabela
+      fito=data.frame(N=N,AB=AB,DA=DA,DR=DR,DoA=DoA,DoR=DoR,FA=FA,FR=FR,VI=VI)
+      
+      #fito
+      
+      
+      #calcula os indices de diversidade
+      Pi<-N/sum(N)
+      Pi<-Pi*log(Pi)
+      SW=-sum(Pi)
+      S=nrow(fito)
+      J=SW/log(S)
+      Hill=exp(SW)
+      paste("Numero de Hill = ",round(Hill,2))
+    })
   
   ###TABELA FITOSSOCIOLOGICA
   
@@ -662,6 +765,38 @@ function(input, output, session) {
       write.table(datasetInput_inter_extra(), file, row.names = FALSE, dec=",", sep=";")
     }
   )
+  
+  
+  #####ESFORÇO AMOSTRAL
+  
+
+  
+  output$esforco <- renderPrint(
+    {
+      inFile <- input$arquivo
+      
+      if (is.null(inFile))
+        return(NULL)
+      
+      veg<-read.table(inFile$datapath, header = T,
+                      sep = ";", dec=",")
+      
+      sys<-input$samp.sis
+      plot_size<-as.numeric(input$area)
+      forest_area<-as.numeric(input$area_floresta)
+      strata_area <- as.numeric(unlist(strsplit(input$area_estratos,",")))
+      alfa<-as.numeric(input$alfa)
+      LE<-as.numeric(input$LE)
+      
+      
+      source("https://raw.githubusercontent.com/higuchip/sampling.analysis/master/sampling.analysis.R")
+      
+     sampling.analysis(veg,sys = sys, plot_size = plot_size,  forest_area = forest_area, strata_area = strata_area, alfa = alfa, LE = LE/100)
+      
+     
+    
+    })
+  
   
   
   ##CURVA DE ACUMULACAO
