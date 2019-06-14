@@ -18,7 +18,7 @@ Updates:
 #### Arquivo de entrada
 * Arquivo de entrada deve estar formatado conforme [arquivo exemplo](https://raw.githubusercontent.com/higuchip/FitoCom/master/dados_exemplo.csv)
 , que deve ter necessariamente as colunas **parc** (parcelas), **spp** (espécies), **dap** ou **cap** (circunferência ou diâmetro na altura do peito em cm).
-* Apenas no caso de amostragem estratificada, é necessário que o arquivo tenha coluna "estrato".
+* Apenas no caso de amostragem estratificada, é necessário que o arquivo tenha coluna "estratos".
 
 #### Descritores fitossociológicos:
 

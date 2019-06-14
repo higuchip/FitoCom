@@ -6,7 +6,7 @@
 #### Descritores fitossociológicos:
 
 * Indicar tamanho de parcelas em m2
-* Análise do Esforço amostral: No caso de Amostragem Estratificada é necessária a inclusão de coluna "estrato" no arquivo entrada.
+* Análise do Esforço amostral: No caso de Amostragem Estratificada é necessária a inclusão de coluna "estratos" no arquivo entrada.
 
 #### Espécies indicadoras:
 
