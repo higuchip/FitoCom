@@ -7,7 +7,7 @@ library(markdown)
 readme_text <- includeMarkdown("README.md")
 
 # Interface do usuário
-shinyUI(
+fluidPage(
   navbarPage(
     title = h4("FitoCom 1.6"),
     theme = shinytheme("flatly"),
