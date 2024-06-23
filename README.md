@@ -4,10 +4,13 @@
 
 Autor: Pedro Higuchi - higuchip at gmail.com 
 
-**Versão: 1.5**
 
 Updates:
 
+**Versão: 1.6**
+* Ajustes diversos
+
+**Versão: 1.5**
 * Correção de bugs
 * Adicionada Análise do esforço amostral com base na abundância e área basal
 * Adicionada a determinação do número de Hill, na parte "Resumo"

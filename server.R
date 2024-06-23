@@ -1,4 +1,5 @@
-
+library(iNEXT)
+library(labdsv)
 
 function(input, output, session) {
   
@@ -14,6 +15,7 @@ function(input, output, session) {
       veg<-read.table(inFile$datapath, header = T,
                       sep = ";", dec=",")
       matriz<-as.data.frame.matrix(table(veg$spp, veg$parc))
+      matriz <- matriz[rownames(matriz) != "", ]
       area<-as.numeric(input$area)
       
       
@@ -52,7 +54,8 @@ function(input, output, session) {
       FR<-(FA/sum(FA))*100
       
       #checa por NAs nos dados e transforma em zeros
-      veg[is.na(veg)] <- 0
+      #veg[is.na(veg)] <- 0
+      veg <- veg[veg$spp != "", ]
       
       #determina se existe "caps" ou "daps" e quais colunas estao
       cols = grep('cap', colnames(veg))
@@ -101,7 +104,8 @@ function(input, output, session) {
       J=SW/log(S)
       
       
-      paste ("Densidade total por hectare = ", round(dta,digits=2), "\u00B1",round(dtadesv,digits=2),"ind/ha")
+      #paste ("Densidade total por hectare = ", round(dta,digits=2), "\u00B1",round(dtadesv,digits=2),"ind/ha")
+      paste ("Densidade total por hectare = ", round(dta,digits=2), 'ind/ha')
       
       
       
@@ -120,6 +124,7 @@ function(input, output, session) {
       veg<-read.table(inFile$datapath, header = T,
                       sep = ";", dec=",")
       matriz<-as.data.frame.matrix(table(veg$spp, veg$parc))
+      matriz <- matriz[rownames(matriz) != "", ]
       area<-as.numeric(input$area)
       
       
@@ -158,7 +163,8 @@ function(input, output, session) {
       FR<-(FA/sum(FA))*100
       
       #checa por NAs nos dados e transforma em zeros
-      veg[is.na(veg)] <- 0
+      #veg[is.na(veg)] <- 0
+      veg <- veg[veg$spp != "", ]
       
       #determina se existe "caps" ou "daps" e quais colunas est�o
       cols = grep('cap', colnames(veg))
@@ -203,7 +209,7 @@ function(input, output, session) {
       SW=-sum(Pi)
       S=nrow(fito)
       J=SW/log(S)
-      paste("Área basal total por hectare = ",round(abta,digits=2),"\u00B1",round(abdesv,digits=2),"m2/ha")
+      paste("Área basal total por hectare = ",round(abta,digits=2),"m2/ha")
     })
   output$resumo3 <- renderText(
     {
@@ -215,6 +221,7 @@ function(input, output, session) {
       veg<-read.table(inFile$datapath, header = T,
                       sep = ";", dec=",")
       matriz<-as.data.frame.matrix(table(veg$spp, veg$parc))
+      matriz <- matriz[rownames(matriz) != "", ]
       area<-as.numeric(input$area)
       
       
@@ -253,7 +260,8 @@ function(input, output, session) {
       FR<-(FA/sum(FA))*100
       
       #checa por NAs nos dados e transforma em zeros
-      veg[is.na(veg)] <- 0
+      #veg[is.na(veg)] <- 0
+      veg <- veg[veg$spp != "", ]
       
       #determina se existe "caps" ou "daps" e quais colunas est�o
       cols = grep('cap', colnames(veg))
@@ -298,7 +306,7 @@ function(input, output, session) {
       SW=-sum(Pi)
       S=nrow(fito)
       J=SW/log(S)
-      paste("Riqueza = ",S,"esp.")
+      paste("Riqueza = ",S,"espécies")
     })
   
   output$resumo4 <- renderText(
@@ -311,6 +319,7 @@ function(input, output, session) {
       veg<-read.table(inFile$datapath, header = T,
                       sep = ";", dec=",")
       matriz<-as.data.frame.matrix(table(veg$spp, veg$parc))
+      matriz <- matriz[rownames(matriz) != "", ]
       area<-as.numeric(input$area)
       
       
@@ -349,7 +358,8 @@ function(input, output, session) {
       FR<-(FA/sum(FA))*100
       
       #checa por NAs nos dados e transforma em zeros
-      veg[is.na(veg)] <- 0
+      #veg[is.na(veg)] <- 0
+      veg <- veg[veg$spp != "", ]
       
       #determina se existe "caps" ou "daps" e quais colunas est�o
       cols = grep('cap', colnames(veg))
@@ -414,6 +424,7 @@ function(input, output, session) {
       veg<-read.table(inFile$datapath, header = T,
                       sep = ";", dec=",")
       matriz<-as.data.frame.matrix(table(veg$spp, veg$parc))
+      matriz <- matriz[rownames(matriz) != "", ]
       area<-as.numeric(input$area)
       
       
@@ -452,7 +463,8 @@ function(input, output, session) {
       FR<-(FA/sum(FA))*100
       
       #checa por NAs nos dados e transforma em zeros
-      veg[is.na(veg)] <- 0
+      #veg[is.na(veg)] <- 0
+      veg <- veg[veg$spp != "", ]
       
       #determina se existe "caps" ou "daps" e quais colunas est
       cols = grep('cap', colnames(veg))
@@ -517,6 +529,7 @@ function(input, output, session) {
       veg<-read.table(inFile$datapath, header = T,
                       sep = ";", dec=",")
       matriz<-as.data.frame.matrix(table(veg$spp, veg$parc))
+      matriz <- matriz[rownames(matriz) != "", ]
       area<-as.numeric(input$area)
       
       
@@ -555,7 +568,8 @@ function(input, output, session) {
       FR<-(FA/sum(FA))*100
       
       #checa por NAs nos dados e transforma em zeros
-      veg[is.na(veg)] <- 0
+      #veg[is.na(veg)] <- 0
+      veg <- veg[veg$spp != "", ]
       
       #determina se existe "caps" ou "daps" e quais colunas est
       cols = grep('cap', colnames(veg))
@@ -608,7 +622,7 @@ function(input, output, session) {
       S=nrow(fito)
       J=SW/log(S)
       Hill=exp(SW)
-      paste("Numero de Hill = ",round(Hill,2))
+      paste("Riqueza Efetiva (Numero de Hill) = ",round(Hill,0), 'espécies')
     })
   
   ###TABELA FITOSSOCIOLOGICA
@@ -622,6 +636,7 @@ function(input, output, session) {
     veg<-read.table(inFile$datapath, header = T,
                     sep = ";", dec=",")
     matriz<-as.data.frame.matrix(table(veg$spp, veg$parc))
+    matriz <- matriz[rownames(matriz) != "", ]
     area<-as.numeric(input$area)
     
     
@@ -660,7 +675,8 @@ function(input, output, session) {
     FR<-(FA/sum(FA))*100
     
     #checa por NAs nos dados e transforma em zeros
-    veg[is.na(veg)] <- 0
+    #veg[is.na(veg)] <- 0
+    veg <- veg[veg$spp != "", ]
     
     #determina se existe "caps" ou "daps" e quais colunas est�o
     cols = grep('cap', colnames(veg))
@@ -727,7 +743,8 @@ function(input, output, session) {
       paste("tabela_fito",  Sys.Date(),".csv", sep = "")
     },
     content = function(file) {
-      write.table(datasetInput_fito(), file, row.names = TRUE, dec=",", sep=";")
+      write.csv2(datasetInput_fito(), 
+                 file, row.names = TRUE)
     }
   )
   
@@ -742,8 +759,10 @@ function(input, output, session) {
     veg<-read.table(inFile$datapath, header = T,
                     sep = ";", dec=",")
     matriz<-as.data.frame.matrix(table(veg$parc, veg$spp))
+    matriz <- matriz[rownames(matriz) != "", ]
     q<-as.numeric(input$typeInput)
-    curva<-iNEXT(t(matriz), q=0, datatype="incidence_raw")
+    #curva<-iNEXT(t(matriz), q=0, datatype="incidence_raw")
+    curva <-iNEXT(list(t(matriz)), q = 0, datatype = "incidence_raw")
     curva$iNextEst
   }
   
@@ -762,15 +781,13 @@ function(input, output, session) {
       paste("tabela_inter_extra", Sys.Date(),".csv", sep = "")
     },
     content = function(file) {
-      write.table(datasetInput_inter_extra(), file, row.names = FALSE, dec=",", sep=";")
+      write.csv2(datasetInput_inter_extra(), 
+                 file, row.names = FALSE)
     }
   )
   
   
   #####ESFORÇO AMOSTRAL
-  
-
-  
   output$esforco <- renderPrint(
     {
       inFile <- input$arquivo
@@ -791,10 +808,10 @@ function(input, output, session) {
       
       source("https://raw.githubusercontent.com/higuchip/sampling.analysis/master/sampling.analysis.R")
       
-     sampling.analysis(veg,sys = sys, plot_size = plot_size,  forest_area = forest_area, strata_area = strata_area, alfa = alfa, LE = LE/100)
+      sampling.analysis(veg,sys = sys, plot_size = plot_size,  forest_area = forest_area, strata_area = strata_area, alfa = alfa, LE = LE/100)
       
-     
-    
+      
+      
     })
   
   
@@ -815,10 +832,13 @@ function(input, output, session) {
     veg<-read.table(inFile$datapath, header = T,
                     sep = ";", dec=",")
     matriz<-as.data.frame.matrix(table(veg$parc, veg$spp))
+    matriz <- matriz[rownames(matriz) != "", ]
+    matriz<-t(matriz)
+    matriz_lista<-list(matriz)
     q<-as.numeric(input$typeInput)
-    curva<-iNEXT(t(matriz), q=0, datatype="incidence_raw")
+    curva<-iNEXT(matriz_lista, q=0, datatype="incidence_raw")
     c<-as.numeric(input$curvaInput)
-    ggiNEXT(curva, type = c)
+    ggiNEXT(curva, type = c, grey = TRUE)
   })
   
   #EXPORTACAO
@@ -832,21 +852,48 @@ function(input, output, session) {
     veg<-read.table(inFile$datapath, header = T,
                     sep = ";", dec=",")
     matriz<-as.data.frame.matrix(table(veg$parc, veg$spp))
+    matriz <- matriz[rownames(matriz) != "", ]
     #q<-as.numeric(input$typeInput)
     curva<-iNEXT(t(matriz), q=0, datatype="incidence_raw")
     c<-as.numeric(input$curvaInput)
     ggiNEXT(curva, type = c)
   }
   
-  output$downloadPlot = downloadHandler(
-    filename = 'curva.jpg',
+  # Definir a função de exportação da curva como imagem .jpg
+  output$downloadPlot <- downloadHandler(
+    filename = function() {
+      paste("curva_", Sys.Date(), ".jpg", sep = "")
+    },
     content = function(file) {
-      device <- function(..., width, height) {
-        grDevices::jpeg(..., width = 2500, height = 2000,
-                        res = 300, units = "px")
+      # Função para gerar o gráfico
+      plotInput <- function() {
+        inFile <- input$arquivo
+        if (is.null(inFile)) return(NULL)
+        
+        veg <- read.table(inFile$datapath, header = TRUE, sep = ";", dec = ",")
+        matriz <- as.data.frame.matrix(table(veg$parc, veg$spp))
+        matriz <- matriz[, rownames(matriz) != ""]
+        matriz[matriz > 0] <- 1  # Transformar valores não-zero em 1
+        
+        matriz_lista <- list(t(matriz))
+        q <- as.numeric(input$typeInput)
+        curva <- iNEXT(matriz_lista, q = 0, datatype = "incidence_raw")
+        c <- as.numeric(input$curvaInput)
+        
+        plot <- ggiNEXT(curva, type = c, grey = TRUE)
+        return(plot)
       }
-      ggsave(file, plot = plotInput(), device = device)
-    })
+      
+      # Função para salvar o gráfico
+      device <- function(..., width, height) {
+        grDevices::jpeg(..., width = 2500, height = 2000, res = 300, units = "px")
+      }
+      
+      # Salvar o gráfico como .jpg
+      ggsave(file, plot = plotInput(), device = device, width = 8, height = 6)
+    },
+    contentType = 'image/jpeg'  # Especificar o tipo de conteúdo como imagem JPEG
+  )
   
   
   
@@ -854,73 +901,61 @@ function(input, output, session) {
   
   
   
+  ## ESPÉCIES INDICADORAS
+  
   info <- eventReactive(input$arquivo, {
     inFile <- input$arquivo
-    # Instead # if (is.null(inFile)) ... use "req"
     req(inFile)
     
-    # Changes in read.table
-    veg <- read.table(inFile$datapath, header = T,
-                      sep = ";", dec=",")
+    veg <- read.table(inFile$datapath, header = TRUE, sep = ";", dec = ",")
     vars <- names(veg)
-    # Update select input immediately after clicking on the action button.
-    updateSelectInput(session, "columns1","Selecione as Parcelas", choices = vars)
-    updateSelectInput(session, "columns","Selecione os Setores", choices = vars)
+    updateSelectInput(session, "columns1", "Selecione as Parcelas", choices = vars)
+    updateSelectInput(session, "columns", "Selecione os Setores", choices = vars)
     
-    
-    veg
-    
+    return(veg)
   })
   
-  output$indicadoras <- renderTable(rownames = TRUE, striped = F,
-                                    bordered = T, digits = 4,
-                                    {
-                                      indicadoras <- info()
-                                      
-                                      #setores<-subset(indicadoras, select = c(input$columns))
-                                      #veg$setores<-setores
-                                      inFile <- input$arquivo
-                                      veg <- read.table(inFile$datapath, header = T,
-                                                        sep = ";", dec=",")
-                                      sub_veg <- subset(indicadoras, select = c(input$columns1,input$columns)) #subsetting takes place here
-                                      matriz_ind<-table(sub_veg[,1], sub_veg[,2])
-                                      matriz_ind<-as.data.frame(as.table(matriz_ind))
-                                      matriz_ind<-matriz_ind[matriz_ind$Freq>0,]
-                                      setores<-matriz_ind$Var2
-                                      matriz<-as.data.frame.matrix(table(veg$parc, veg$spp))
-                                      indicadoras_resultado<-(indval(matriz, setores))
-                                      indicadoras_table<-cbind(indicadoras_resultado$indval,indicadoras_resultado$pval)
-                                      colnames(indicadoras_table)[c(3)]<-"p"
-                                      indicadoras_significativas<-(subset(indicadoras_table, p < 0.05))
-                                      (indicadoras_significativas)
-                                      
-                                      
-                                    })
+  output$indicadoras <- renderTable({
+    indicadoras <- info()
+    inFile <- input$arquivo
+    veg <- read.table(inFile$datapath, header = TRUE, sep = ";", dec = ",")
+    sub_veg <- subset(indicadoras, select = c(input$columns1, input$columns))
+    matriz_ind <- table(sub_veg[, 1], sub_veg[, 2])
+    matriz_ind <- as.data.frame(as.table(matriz_ind))
+    matriz_ind <- matriz_ind[matriz_ind$Freq > 0, ]
+    setores <- matriz_ind$Var2
+    matriz <- as.data.frame.matrix(table(veg$parc, veg$spp))
+    matriz <- matriz[, rownames(matriz) != ""]
+    indicadoras_resultado <- indval(matriz, setores)
+    indicadoras_table <- cbind(indicadoras_resultado$indval, indicadoras_resultado$pval)
+    colnames(indicadoras_table)[3] <- "p"
+    indicadoras_significativas <- subset(indicadoras_table, p < 0.05)
+    return(indicadoras_significativas)
+  }, rownames = TRUE, striped = FALSE, bordered = TRUE, digits = 4)
   
-  
-  # Arquivo para download
   output$download_ind <- downloadHandler(
     filename = function() {
-      paste("tabela_indicadoras",Sys.Date(), ".csv", sep = "")
+      paste("tabela_indicadoras_", Sys.Date(), ".csv", sep = "")
     },
     content = function(file) {
       indicadoras <- info()
       inFile <- input$arquivo
-      veg <- read.table(inFile$datapath, header = T,
-                        sep = ";", dec=",")
-      sub_veg <- subset(indicadoras, select = c(input$columns1,input$columns)) #subsetting takes place here
-      matriz_ind<-table(sub_veg$parc, sub_veg$exp)
-      matriz_ind<-as.data.frame(as.table(matriz_ind))
-      matriz_ind<-matriz_ind[matriz_ind$Freq>0,]
-      setores<-matriz_ind$Var2
-      matriz<-as.data.frame.matrix(table(veg$parc, veg$spp))
-      indicadoras_resultado<-(indval(matriz, setores))
-      indicadoras_table<-cbind(indicadoras_resultado$indval,indicadoras_resultado$pval)
-      colnames(indicadoras_table)[c(3)]<-"p"
-      indicadoras_significativas<-(subset(indicadoras_table, p < 0.05))
-      write.table(indicadoras_significativas, file, row.names = TRUE, dec=",", sep=";")
-    }
-    
-    
+      veg <- read.table(inFile$datapath, header = TRUE, sep = ";", dec = ",")
+      sub_veg <- subset(indicadoras, select = c(input$columns1, input$columns))
+      matriz_ind <- table(sub_veg[, 1], sub_veg[, 2])
+      matriz_ind <- as.data.frame(as.table(matriz_ind))
+      matriz_ind <- matriz_ind[matriz_ind$Freq > 0, ]
+      setores <- matriz_ind$Var2
+      matriz <- as.data.frame.matrix(table(veg$parc, veg$spp))
+      matriz <- matriz[, rownames(matriz) != ""]
+      indicadoras_resultado <- indval(matriz, setores)
+      indicadoras_table <- cbind(indicadoras_resultado$indval, indicadoras_resultado$pval)
+      colnames(indicadoras_table)[3] <- "p"
+      indicadoras_significativas <- subset(indicadoras_table, p < 0.05)
+      
+      # Grava o arquivo CSV
+      write.table(indicadoras_significativas, file, row.names = TRUE, sep = ";", dec = ",", col.names = NA, qmethod = "double")
+    },
+    contentType = "text/csv"  # Especificar o tipo de conteúdo como CSV
   )
 }
