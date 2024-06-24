@@ -748,6 +748,41 @@ function(input, output, session) {
     }
   )
   
+  
+  ###GRAFICO FITOSSOCIOLOGIA
+  source("https://gist.githubusercontent.com/higuchip/0a50d6d28974205147f1ee1128f8b948/raw/5f49273cde3ec6a520d8eb7d27b133ddef689161/phyto_stackedbars_plot.R")
+  
+  # Função para gerar o gráfico
+  plotInput_fito <- reactive({
+    inFile <- input$arquivo
+    
+    if (is.null(inFile))
+      return(NULL)
+    
+    veg <- read.table(inFile$datapath, header = TRUE, sep = ";", dec = ",")
+    area <- as.numeric(input$area)
+    phyto_stackedbars_plot(veg, area)
+  })
+  
+  # Renderizar o gráfico na aba "Gráfico"
+  output$phytoPlot <- renderPlot({
+    plotInput_fito()
+  })
+  
+  # Função para salvar o gráfico como JPG
+  output$downloadPlot_fito <- downloadHandler(
+    filename = function() {
+      paste("phyto_plot_", Sys.Date(), ".jpg", sep = "")
+    },
+    content = function(file) {
+      device <- function(..., width, height) {
+        grDevices::jpeg(..., width = 2500, height = 2000, res = 300, units = "px")
+      }
+      ggsave(file, plot = plotInput_fito(), device = device, width = 8, height = 6)
+    },
+    contentType = 'image/jpeg'
+  )
+  
   ###TABELA DE INTERPOLACAO E EXTRAPOLACAO
   
   datasetInput_inter_extra = function() {

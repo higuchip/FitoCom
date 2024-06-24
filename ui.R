@@ -9,7 +9,7 @@ readme_text <- includeMarkdown("README.md")
 # Interface do usuário
 fluidPage(
   navbarPage(
-    title = h4("FitoCom 1.6"),
+    title = h4("FitoCom 1.7"),
     theme = shinytheme("flatly"),
     tabPanel(
       h4("Home"),
@@ -40,7 +40,10 @@ fluidPage(
                      downloadButton('downloadTab1', 'Exportar como CSV'),
                      br(),
                      "Estimativas de Densidade Absoluta (DA ind/ha), Relativa (DR %), Dominância Absoluta (DoA m²/ha), Relativa (DoR %), Frequência Absoluta (FA %), Relativa (FR %) e Valor de Importância (VI %)",
-                     tableOutput("fito"))
+                     tableOutput("fito")),
+            tabPanel("Gráfico", value = 3, 
+                     plotOutput("phytoPlot"),
+                     downloadButton('downloadPlot_fito', 'Exportar Gráfico como JPG'))
           )
         )
       )

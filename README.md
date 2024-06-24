@@ -7,6 +7,9 @@ Autor: Pedro Higuchi - higuchip at gmail.com
 
 Updates:
 
+**Versão: 1.7**
+* Adicionado gráfico para os descritores fitossociológicos
+
 **Versão: 1.6**
 * Ajustes diversos
 
