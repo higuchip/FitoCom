@@ -1,5 +1,9 @@
 library(iNEXT)
 library(labdsv)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(forcats)
 
 function(input, output, session) {
   
